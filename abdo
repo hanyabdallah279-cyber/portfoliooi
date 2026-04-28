@@ -1,0 +1,41 @@
+### مخطط تدفق النظام (Activity Diagram)
+
+```mermaid
+graph TD
+    %% بداية الرسمة
+    Start(( )) --> OpenApp[User opens Smart Trainer app]
+    
+    OpenApp --> Login[User logs in or signs up]
+    
+    Login --> AuthDecision{Is user authenticated?}
+    
+    AuthDecision -- No --> Error[Show error]
+    Error --> Login
+    
+    AuthDecision -- Yes --> StartSession[User starts exercise session]
+    
+    StartSession --> Capture[User uploads or captures exercise image]
+    
+    %% خطوات المعالجة (التي كانت في خانة Model)
+    Capture --> Detect[System detects pose landmarks]
+    Detect --> Classify[System classifies posture]
+    Classify --> Evaluate[System evaluates posture and calculates angles]
+    
+    %% خطوات التغذية الراجعة
+    Evaluate --> Feedback[System generates real-time feedback]
+    
+    Feedback --> HRDecision{Is heart rate sensor connected?}
+    
+    HRDecision -- Yes --> BPM[Read BPM and display]
+    BPM --> Results[System shows feedback and results]
+    
+    HRDecision -- No --> Results
+    
+    Results --> EndSession[User ends the session]
+    EndSession --> End(( ))
+    
+    %% تنسيق الألوان لجعلها تبدو احترافية (اختياري)
+    style Start fill:#000,stroke:#333,stroke-width:2px
+    style End fill:#000,stroke:#333,stroke-width:2px
+    style AuthDecision fill:#f9f,stroke:#333,stroke-width:2px
+    style HRDecision fill:#f9f,stroke:#333,stroke-width:2px
